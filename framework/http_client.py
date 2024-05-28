@@ -1,6 +1,8 @@
 from httpx import get, post
 from assertpy import assert_that
 
+from framework.response_util import readable_json
+
 
 class TestClient:
     """
@@ -17,7 +19,7 @@ class TestClient:
         get_resp = get(self.service_base_url + path, headers=self.auth)
 
         # Verify expected status code
-        assert_that(get_resp).has_status_code(status_code)
+        assert_that(get_resp, readable_json(get_resp.json())).has_status_code(status_code)
 
         # Extract response body
         return get_resp.json()
@@ -27,7 +29,7 @@ class TestClient:
         post_resp = post(self.service_base_url + path, headers=self.auth, data=body)
 
         # Verify expected status code
-        assert_that(post_resp).has_status_code(status_code)
+        assert_that(post_resp, readable_json(post_resp.json())).has_status_code(status_code)
 
         # Extract response body
         return post_resp.json()

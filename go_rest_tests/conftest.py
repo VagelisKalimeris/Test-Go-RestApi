@@ -1,8 +1,6 @@
 import pytest
-from assertpy import add_extension
 
 from framework.go_rest_client import GoRestTestClient
-from framework.assertpy_extensions import extract_key
 
 
 @pytest.fixture(scope='session')

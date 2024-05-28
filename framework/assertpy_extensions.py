@@ -13,7 +13,3 @@ def extract_key(self, key):
     self.val = self.val[key]
 
     return self
-
-
-# Make custom extension available to all tests
-add_extension(extract_key)
