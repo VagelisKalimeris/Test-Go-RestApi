@@ -1,4 +1,4 @@
-from assertpy import assert_that
+from assertpy import assert_that, add_extension
 
 
 def extract_key(self, key):
@@ -13,3 +13,7 @@ def extract_key(self, key):
     self.val = self.val[key]
 
     return self
+
+
+# Make custom extension available to all tests
+add_extension(extract_key)
