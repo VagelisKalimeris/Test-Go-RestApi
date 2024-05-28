@@ -5,12 +5,14 @@ from go_rest_tests.test_data.users import user_1
 
 
 def test_create_new_user(go_rest_client):
+    new_user_dict = user_1.__dict__
+
     # POST new user
-    post_resp = go_rest_client.post('/users', user_1.__dict__)
+    post_resp = go_rest_client.post('/users', new_user_dict)
 
     # Verify user creation & POST response data is same as original
     new_user_id = assert_that(post_resp, readable_json(post_resp))\
-        .is_equal_to(user_1.__dict__, ignore='id')\
+        .is_equal_to(new_user_dict, ignore='id')\
         .extract_key('id')\
         .val
 
@@ -19,5 +21,5 @@ def test_create_new_user(go_rest_client):
 
     # Verify GET response data is same as original
     assert_that(get_resp, readable_json(get_resp))\
-        .is_equal_to(user_1.__dict__, ignore='id')\
+        .is_equal_to(new_user_dict, ignore='id')\
         .has_id(new_user_id)
