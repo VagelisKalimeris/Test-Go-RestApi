@@ -1,16 +1,18 @@
+import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.users import user_1
+from go_rest_tests.test_data.models import User, UserGender, UserStatus
+from go_rest_tests.test_data.users import valid_user
 
 
-def test_create_new_user(go_rest_client):
-    new_user_dict = user_1.__dict__
+def test_create_new_valid_user(go_rest_client):
+    new_user_dict = valid_user.__dict__
 
     # POST new user
     post_resp = go_rest_client.post('/users', new_user_dict)
 
-    # Verify user creation & POST response data is same as original
+    # Verify user creation & POST response data is same as original and retrieve new user id
     new_user_id = assert_that(post_resp, readable_json(post_resp))\
         .is_equal_to(new_user_dict, ignore='id')\
         .extract_key('id')\
@@ -23,3 +25,25 @@ def test_create_new_user(go_rest_client):
     assert_that(get_resp, readable_json(get_resp))\
         .is_equal_to(new_user_dict, ignore='id')\
         .has_id(new_user_id)
+
+
+@pytest.mark.parametrize('invalid_user', [
+    User('invalid@random.com', 'invalid gender option', 'John Doe', UserStatus.active.value),
+    User('invalid@random.com', UserGender.male.value, 'John Doe', 'invalid status option'),
+    User('invalid@random.com', UserGender.male.value, 'John Doe', ''),
+    User('', UserGender.male.value, 'John Doe', UserStatus.active.value),
+    User('existing@random.com', UserGender.male.value, 'John Doe', UserStatus.active.value)
+])
+def test_create_new_invalid_user(go_rest_client, invalid_user):
+    """
+    Verifies user creation fails with:
+        - Invalid gender
+        - Invalid status
+        - Missing status
+        - Missing email
+        - Existing user email
+    """
+    new_user_dict = invalid_user.__dict__
+
+    # POST new user with existing user email and verify 422 code
+    go_rest_client.post('/users', new_user_dict, status_code=422)
