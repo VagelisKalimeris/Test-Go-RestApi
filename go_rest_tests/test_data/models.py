@@ -27,6 +27,9 @@ class TodoStatus(Enum):
 
 
 class User:
+    """
+    Go Rest user model.
+    """
     def __init__(self, email: str, gender: UserGender, name: str, status: UserStatus):
         self.email = email
         self.gender = gender
@@ -35,6 +38,9 @@ class User:
 
 
 class Post:
+    """
+    Go Rest post model.
+    """
     def __init__(self, id: int, user_id: int, title: str, body: str):
         self.id = id
         self.user_id = user_id
@@ -43,6 +49,9 @@ class Post:
 
 
 class Comment:
+    """
+    Go Rest comment model.
+    """
     def __init__(self, id: int, post_id: int, name: str, email: str, body: str):
         self.id = id
         self.post_id = post_id
@@ -52,6 +61,9 @@ class Comment:
 
 
 class Todo:
+    """
+    Go Rest to do model.
+    """
     def __init__(self, id: int, user_id: int, title: str, due_on: str, status: str):
         self.id = id
         self.user_id = user_id
