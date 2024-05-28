@@ -3,10 +3,20 @@ from assertpy import assert_that
 
 from framework.response_util import readable_json
 from go_rest_tests.test_data.models import User, UserGender, UserStatus
-from go_rest_tests.test_data.users import valid_user
 
 
-def test_create_new_valid_user(go_rest_client):
+@pytest.mark.parametrize('valid_user', [
+    User('user@random.com', UserGender.male.value, 'John Doe', UserStatus.active.value)
+])
+def test_create_new_valid_user(go_rest_client, valid_user):
+    """
+    Creates user & verifies:
+        - Operation success
+        - Expected response data
+    Retrieves created user & verifies:
+        - User exists
+        - User data are same
+    """
     new_user_dict = valid_user.__dict__
 
     # POST new user
