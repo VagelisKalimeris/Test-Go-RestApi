@@ -1,4 +1,3 @@
-import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json

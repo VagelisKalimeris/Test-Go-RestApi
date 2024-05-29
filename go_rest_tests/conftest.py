@@ -15,7 +15,7 @@ def go_rest_client():
     yield GoRestTestClient()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='session', autouse=True)
 def valid_user(go_rest_client):
     """
     Valid user for all tests to access and use.
