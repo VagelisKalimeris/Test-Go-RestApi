@@ -47,7 +47,7 @@ def valid_user(go_rest_client):
     # DELETE new user
     go_rest_client.delete(f'/users/{new_user_id}')
 
-    # GET deleted user by id
+    # GET deleted user by id & verify is absent
     go_rest_client.get(f'/users/{new_user_id}', 404)
 
 

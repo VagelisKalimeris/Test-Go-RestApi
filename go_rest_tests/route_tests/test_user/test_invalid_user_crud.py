@@ -7,6 +7,21 @@ from go_rest_tests.test_data.user_emails import valid_user_email, invalid_user_e
 
 
 class TestUserInvalidCRUD:
+    """
+    Verifies user creation fails with:
+        - Invalid gender
+        - Invalid status
+        - Missing status
+        - Missing email
+        - Existing user email
+    Verifies invalid user email:
+        - Does not end up in all users request
+    Verifies non-existing user:
+        - Cannot be updated
+        - Cannot be deleted
+    Verifies existing user:
+        - Cannot be updated with invalid gender
+    """
     @pytest.mark.parametrize('invalid_user', [
         User(invalid_user_email, 'invalid gender option', 'John Doe', UserStatus.active.value),
         User(invalid_user_email, UserGender.male.value, 'John Doe', 'invalid status option'),
@@ -15,14 +30,6 @@ class TestUserInvalidCRUD:
         User(valid_user_email, UserGender.male.value, 'John Doe', UserStatus.active.value)
     ])
     def test_invalid_user_creation(self, go_rest_client, invalid_user):
-        """
-        Verifies user creation fails with:
-            - Invalid gender
-            - Invalid status
-            - Missing status
-            - Missing email
-            - Existing user email
-        """
         # POST new user with existing user email and verify 422 code
         go_rest_client.post('/users', invalid_user.__dict__, status_code=422)
 
@@ -41,15 +48,15 @@ class TestUserInvalidCRUD:
     def test_non_existing_user_update(self, go_rest_client):
         update_info = {'status': UserStatus.inactive.value}
 
-        # PUT new user
+        # Verify non-existing user cannot be updated
         go_rest_client.patch(f'/users/{9999999}', update_info, 404)
 
-    def test_existing_user_invalid_update(self, go_rest_client, valid_user_id):
-        update_info = {'gender': 'invalid status option'}
-
-        # PUT new user
-        go_rest_client.patch(f'/users/{valid_user_id}', update_info, 422)
-
     def test_non_existing_user_deletion(self, go_rest_client):
-        # PUT new user
+        # Verify non-existing user cannot be deleted
         go_rest_client.delete(f'/users/{9999999}', 404)
+
+    def test_existing_user_invalid_update(self, go_rest_client, valid_user_id):
+        update_info = {'gender': 'invalid gender option'}
+
+        # Verify existing user cannot be updated with invalid gender
+        go_rest_client.patch(f'/users/{valid_user_id}', update_info, 422)
