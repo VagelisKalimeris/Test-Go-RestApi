@@ -28,7 +28,7 @@ class TestPostCRUD:
         assert_that(get_resp, readable_json(get_resp))\
             .is_equal_to(valid_post)
 
-    def test_new_user_is_vended_in_unfiltered_users(self, go_rest_client, valid_post):
+    def test_new_post_is_vended_in_unfiltered_users(self, go_rest_client, valid_post):
         # Retrieve unfiltered resources
         get_resp = go_rest_client.get('/posts/')
 
@@ -36,7 +36,7 @@ class TestPostCRUD:
         assert_that(get_resp, readable_json(get_resp))\
             .contains(valid_post)
 
-    def test_new_user_update(self, go_rest_client, valid_post_id):
+    def test_post_update(self, go_rest_client, valid_post_id):
         update_info = {'title': 'Summer vacation cancelled!'}
 
         # Update new resource
@@ -46,7 +46,7 @@ class TestPostCRUD:
         assert_that(patch_resp, readable_json(patch_resp)) \
             .has_title('Summer vacation cancelled!')
 
-    def test_get_new_user_after_update(self, go_rest_client, valid_post_id):
+    def test_retrieve_post_after_update(self, go_rest_client, valid_post_id):
         # Retrieve resource by id
         get_resp = go_rest_client.get(f'/posts/{valid_post_id}')
 
