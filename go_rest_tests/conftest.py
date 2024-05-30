@@ -1,5 +1,3 @@
-import datetime
-
 import pytest
 from assertpy import assert_that
 
@@ -12,6 +10,9 @@ from go_rest_tests.test_data.user_emails import valid_user_email
 pytest_plugins = ['framework.assertpy_extensions']
 
 
+########################################################################################################################
+#                                          Resource Creation & Deletion                                                #
+########################################################################################################################
 @pytest.fixture(scope='session')
 def go_rest_client():
     """
