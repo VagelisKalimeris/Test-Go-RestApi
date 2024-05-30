@@ -5,8 +5,8 @@ from framework.response_util import readable_json
 
 class TestPostCRUD:
     """
-    Creates user post and validates:
-        - Expected response data
+    Post creation and deletion are tested by global fixture.
+
     Retrieves valid post & verifies:
         - Post exists
         - Post data are same
@@ -18,7 +18,6 @@ class TestPostCRUD:
     Retrieves updated post & verifies:
         - Post exists
         - Post data are updated
-    Deletes updated post & verifies:
     """
     def test_get_new_post_by_id(self, go_rest_client, valid_post, valid_post_id):
         # Retrieve resource by id
