@@ -3,7 +3,6 @@ from assertpy import assert_that
 
 from framework.response_util import readable_json
 from go_rest_tests.test_data.models import Post
-from go_rest_tests.test_data.user_emails import valid_user_email
 
 
 class TestPostInvalidCRUD:
@@ -18,22 +17,31 @@ class TestPostInvalidCRUD:
         - Cannot be updated
         - Cannot be deleted
     Verifies existing post user id:
-        - Cannot be updated
+        - Cannot be updated with invalid user id
     """
-    @pytest.mark.parametrize('invalid_post', [
-        Post(9999999, 'I liked this game!', 'My friends liked it too'),
-        Post(valid_user_email, 'I liked this game!', None),
-        Post(valid_user_email, '', 'My friends liked it too')
-    ])
-    def test_invalid_post_creation(self, go_rest_client, invalid_post):
-        # POST new post with existing post email and verify 422 code
+    def test_invalid_user_id_post_creation(self, go_rest_client):
+        invalid_post = Post(9999999, 'I liked this game!', 'My friends liked it too')
+
+        # POST a post with invalid user id and verify 422 code
+        go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
+
+    def test_missing_title_post_creation(self, go_rest_client, valid_user_id):
+        invalid_post = Post(valid_user_id, 'I liked this game!', None)
+
+        # POST a post with missing title and verify 422 code
+        go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
+
+    def test_empty_title_post_creation(self, go_rest_client, valid_user_id):
+        invalid_post = Post(valid_user_id, '', 'My friends liked it too')
+
+        # POST a post with empty title and verify 422 code
         go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
 
     def test_invalid_post_not_in_user_posts(self, go_rest_client, valid_user_id):
         # GET all posts
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts')
 
-        # Verify GET all posts response does not contain invalid account
+        # Verify GET all posts response does not contain invalid account data
         assert_that(get_resp, readable_json(get_resp))\
             .extracting('body')\
             .does_not_contain('My friends liked it too')
@@ -48,10 +56,11 @@ class TestPostInvalidCRUD:
         # Verify non-existing post cannot be deleted
         go_rest_client.delete(f'/posts/{9999999}', 404)
 
-    @pytest.mark.xfail(reason='This actually looks like a BUG! '
-                       'Attempting to update the post id internally fails, but API returns 200 OK!')
+    @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the id internally fails, '
+                              'but API returns 200 OK! We should be getting ERROR response since a posts\'s  '
+                              'user id cannot be altered!')
     def test_existing_post_invalid_update(self, go_rest_client, valid_post_id):
         update_info = {'id': 9999999}
 
-        # Verify existing post cannot be updated with invalid gender
+        # Verify existing post cannot be updated with invalid user id
         go_rest_client.patch(f'/posts/{valid_post_id}', update_info, 422)

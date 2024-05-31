@@ -30,7 +30,7 @@ class TestUserInvalidCRUD:
         User(valid_user_email, UserGender.male.value, 'John Doe', UserStatus.active.value)
     ])
     def test_invalid_user_creation(self, go_rest_client, invalid_user):
-        # POST new user with existing user email and verify 422 code
+        # POST invalid user and verify 422 code
         go_rest_client.post('/users', invalid_user.__dict__, status_code=422)
 
     def test_invalid_user_not_in_unfiltered_users(self, go_rest_client):
