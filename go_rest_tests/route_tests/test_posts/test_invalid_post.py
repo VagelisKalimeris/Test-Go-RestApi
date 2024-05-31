@@ -25,11 +25,11 @@ class TestPostInvalidCRUD:
         # POST a post with invalid user id and verify 422 code
         go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
 
-    def test_missing_title_post_creation(self, go_rest_client, valid_user_id):
-        invalid_post = Post(valid_user_id, 'I liked this game!', None)
+    def test_missing_body_post_creation(self, go_rest_client, valid_user_id):
+        invalid_post = {'user_id': valid_user_id, 'title': 'I liked this game!'}
 
         # POST a post with missing title and verify 422 code
-        go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
+        go_rest_client.post('/posts', invalid_post, status_code=422)
 
     def test_empty_title_post_creation(self, go_rest_client, valid_user_id):
         invalid_post = Post(valid_user_id, '', 'My friends liked it too')
