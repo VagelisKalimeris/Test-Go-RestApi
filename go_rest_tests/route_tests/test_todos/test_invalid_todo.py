@@ -2,8 +2,7 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.resource_models import User, UserGender, UserStatus, Todo, TodoStatus
-from go_rest_tests.test_data.user_emails import valid_user_email, invalid_user_email
+from go_rest_tests.test_data.resource_models import Todo, TodoStatus
 
 
 class TestTodoInvalidCRUD:
@@ -38,7 +37,8 @@ class TestTodoInvalidCRUD:
     @pytest.mark.xfail(reason='This actually looks like a BUG. Todos get created with a {"due_on": null} field. '
                               'This should FAIL with error returned!')
     def test_missing_due_on_todo_creation(self, go_rest_client, valid_user_id):
-        invalid_todo = {'user_id': valid_user_id, 'title': 'This should not be here!', 'status': TodoStatus.pending.value}
+        invalid_todo = {'user_id': valid_user_id, 'title': 'This should not be here!',
+                        'status': TodoStatus.pending.value}
 
         # POST to do with missing due on and verify 422 code
         go_rest_client.post('/todos', invalid_todo, status_code=422)
