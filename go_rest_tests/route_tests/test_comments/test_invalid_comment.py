@@ -33,8 +33,6 @@ class TestCommentInvalidCRUD:
         # POST comment with invalid post id and verify 422 code
         go_rest_client.post('/comments', invalid_comment.__dict__, status_code=422)
 
-    @pytest.mark.xfail(reason='This actually looks like a BUG. Comments get created with missing fields eg '
-                              '\'name\' or \'email\'. This should FAIL with error returned!')
     def test_missing_name_comment_creation(self, go_rest_client, valid_post_id):
         invalid_comment = {'post_id': valid_post_id, 'email': 'valid@email.com', 'body': 'This post is awesome!'}
 
@@ -67,7 +65,7 @@ class TestCommentInvalidCRUD:
         go_rest_client.delete(f'/comments/{9999999}', 404)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the post id internally fails, '
-                              'but API returns 200 OK! We should be getting ERROR response since a comment\'s  '
+                              'but API returns 200 OK! We should be getting 403 Forbidden, since a comment\'s  '
                               'post id cannot be altered!')
     def test_existing_comment_invalid_update(self, go_rest_client, valid_comment_id):
         update_info = {'post': 9999999}

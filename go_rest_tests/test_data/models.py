@@ -62,7 +62,7 @@ class Todo:
     """
     Go Rest to do model.
     """
-    def __init__(self, user_id: int, title: str, due_on: str, status: str):
+    def __init__(self, user_id: int, title: str, due_on: str, status: TodoStatus):
         self.user_id = user_id
         self.title = title
         self.due_on = due_on
