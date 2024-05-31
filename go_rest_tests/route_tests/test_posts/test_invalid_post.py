@@ -13,7 +13,7 @@ class TestPostInvalidCRUD:
         - Missing body
         - Empty title
     Verifies invalid post:
-        - Is not vended in user's posts request
+        - Is not vended in user's posts response
     Verifies non-existing post:
         - Cannot be updated
         - Cannot be deleted
@@ -30,9 +30,6 @@ class TestPostInvalidCRUD:
         go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
 
     def test_invalid_post_not_in_user_posts(self, go_rest_client, valid_user_id):
-        """
-        Verifies invalid post is not present in all posts response.
-        """
         # GET all posts
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts')
 

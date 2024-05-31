@@ -15,7 +15,7 @@ class TestCommentInvalidCRUD:
         - Missing email
         - Existing comment email
     Verifies invalid comment email:
-        - Does not end up in all comments request
+        - Does not end up in all comments response
     Verifies non-existing comment:
         - Cannot be updated
         - Cannot be deleted
@@ -34,9 +34,6 @@ class TestCommentInvalidCRUD:
         go_rest_client.post('/comments', invalid_comment.__dict__, status_code=422)
 
     def test_invalid_comment_not_in_unfiltered_comments(self, go_rest_client):
-        """
-        Verifies invalid comment is not present in all comments response.
-        """
         # GET all comments
         get_resp = go_rest_client.get('/comments/')
 
