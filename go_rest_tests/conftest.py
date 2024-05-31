@@ -169,7 +169,8 @@ def valid_todo(go_rest_client, valid_user_id):
     Retrieves deleted to do & verifies:
         - Operation failure
     """
-    valid_todo = Todo(valid_user_id, 'Shopping List', '2024-06-08T00:00:00.000+05:30', TodoStatus.pending.value)
+    valid_todo = Todo(valid_user_id, 'Shopping List', '2024-06-08T00:00:00.000+05:30',
+                      TodoStatus.pending.value)
     valid_todo_dict = valid_todo.__dict__
 
     # POST new to do
