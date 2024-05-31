@@ -51,7 +51,7 @@ class TestPostInvalidCRUD:
         # Verify non-existing post cannot be deleted
         go_rest_client.delete(f'/posts/{9999999}', 404)
 
-    @pytest.mark.xfail(reason='This seems like a BUG! '
+    @pytest.mark.xfail(reason='This actually looks like a BUG! '
                        'Attempting to update the post id internally fails, but API returns 200 OK!')
     def test_existing_post_invalid_update(self, go_rest_client, valid_post_id):
         update_info = {'id': 9999999}
