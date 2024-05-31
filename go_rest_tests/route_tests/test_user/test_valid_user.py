@@ -1,7 +1,7 @@
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.models import UserStatus
+from go_rest_tests.test_data.resource_models import UserStatus
 
 
 class TestUserCRUD:

@@ -3,7 +3,7 @@ from assertpy import assert_that
 
 from framework.go_rest_client import GoRestTestClient
 from framework.response_util import readable_json
-from go_rest_tests.test_data.models import User, UserGender, UserStatus, Post, Comment, Todo, TodoStatus
+from go_rest_tests.test_data.resource_models import User, UserGender, UserStatus, Post, Comment, Todo, TodoStatus
 from go_rest_tests.test_data.user_emails import valid_user_email
 
 
