@@ -49,7 +49,7 @@ class TestCommentInvalidCRUD:
         # GET all comments
         get_resp = go_rest_client.get('/comments/')
 
-        # Verify GET all comments response does not contain invalid account data
+        # Verify GET all comments response does not contain invalid data
         assert_that(get_resp, readable_json(get_resp))\
             .extracting('email')\
             .does_not_contain('valid@email.com')

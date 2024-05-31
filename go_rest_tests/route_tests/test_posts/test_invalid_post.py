@@ -41,7 +41,7 @@ class TestPostInvalidCRUD:
         # GET all posts
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts')
 
-        # Verify GET all posts response does not contain invalid account data
+        # Verify GET all posts response does not contain invalid  data
         assert_that(get_resp, readable_json(get_resp))\
             .extracting('body')\
             .does_not_contain('My friends liked it too')

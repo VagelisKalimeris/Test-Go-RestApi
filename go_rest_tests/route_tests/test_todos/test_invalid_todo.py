@@ -53,7 +53,7 @@ class TestTodoInvalidCRUD:
         # GET all todos
         get_resp = go_rest_client.get('/todos/')
 
-        # Verify GET all todos response does not contain invalid account data
+        # Verify GET all todos response does not contain invalid data
         assert_that(get_resp, readable_json(get_resp))\
             .extracting('title')\
             .does_not_contain('Plan vacations')
@@ -71,5 +71,5 @@ class TestTodoInvalidCRUD:
     def test_existing_todo_invalid_update(self, go_rest_client, valid_todo_id):
         update_info = {'user_id': 9999999}
 
-        # Verify existing to do cannot be updated with invalid post id
+        # Verify existing to do cannot be updated with invalid user id
         go_rest_client.patch(f'/todos/{valid_todo_id}', update_info, 422)
