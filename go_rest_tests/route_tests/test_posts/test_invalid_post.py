@@ -2,61 +2,59 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.models import User, UserGender, UserStatus
-from go_rest_tests.test_data.user_emails import valid_user_email, invalid_user_email
+from go_rest_tests.test_data.models import Post
+from go_rest_tests.test_data.user_emails import valid_user_email
 
 
-class TestUserInvalidCRUD:
+class TestPostInvalidCRUD:
     """
-    Verifies user creation fails with:
-        - Invalid gender
-        - Invalid status
-        - Missing status
-        - Missing email
-        - Existing user email
-    Verifies invalid user email:
-        - Does not end up in all users request
-    Verifies non-existing user:
+    Verifies post creation FAILS with:
+        - Invalid user
+        - Missing body
+        - Empty title
+    Verifies invalid post:
+        - Is not vended in user's posts request
+    Verifies non-existing post:
         - Cannot be updated
         - Cannot be deleted
-    Verifies existing user:
-        - Cannot be updated with invalid gender
+    Verifies existing post user id:
+        - Cannot be updated
     """
-    @pytest.mark.parametrize('invalid_user', [
-        User(invalid_user_email, 'invalid gender option', 'John Doe', UserStatus.active.value),
-        User(invalid_user_email, UserGender.male.value, 'John Doe', 'invalid status option'),
-        User(invalid_user_email, UserGender.male.value, 'John Doe', ''),
-        User('', UserGender.male.value, 'John Doe', UserStatus.active.value),
-        User(valid_user_email, UserGender.male.value, 'John Doe', UserStatus.active.value)
+    @pytest.mark.parametrize('invalid_post', [
+        Post(9999999, 'I liked this game!', 'My friends liked it too'),
+        Post(valid_user_email, 'I liked this game!', None),
+        Post(valid_user_email, '', 'My friends liked it too')
     ])
-    def test_invalid_user_creation(self, go_rest_client, invalid_user):
-        # POST new user with existing user email and verify 422 code
-        go_rest_client.post('/users', invalid_user.__dict__, status_code=422)
+    def test_invalid_post_creation(self, go_rest_client, invalid_post):
+        # POST new post with existing post email and verify 422 code
+        go_rest_client.post('/posts', invalid_post.__dict__, status_code=422)
 
-    def test_invalid_user_not_in_unfiltered_users(self, go_rest_client):
+    def test_invalid_post_not_in_user_posts(self, go_rest_client, valid_user_id):
         """
-        Verifies invalid user is not present in all users response.
+        Verifies invalid post is not present in all posts response.
         """
-        # GET all users
-        get_resp = go_rest_client.get('/users/')
+        # GET all posts
+        get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts')
 
-        # Verify GET all users response does not contain invalid account
+        # Verify GET all posts response does not contain invalid account
         assert_that(get_resp, readable_json(get_resp))\
-            .extracting('email')\
-            .does_not_contain(invalid_user_email)
+            .extracting('body')\
+            .does_not_contain('My friends liked it too')
 
-    def test_non_existing_user_update(self, go_rest_client):
-        update_info = {'status': UserStatus.inactive.value}
+    def test_non_existing_post_update(self, go_rest_client):
+        update_info = {'body': 'My friends liked it too'}
 
-        # Verify non-existing user cannot be updated
-        go_rest_client.patch(f'/users/{9999999}', update_info, 404)
+        # Verify non-existing post cannot be updated
+        go_rest_client.patch(f'/posts/{9999999}', update_info, 404)
 
-    def test_non_existing_user_deletion(self, go_rest_client):
-        # Verify non-existing user cannot be deleted
-        go_rest_client.delete(f'/users/{9999999}', 404)
+    def test_non_existing_post_deletion(self, go_rest_client):
+        # Verify non-existing post cannot be deleted
+        go_rest_client.delete(f'/posts/{9999999}', 404)
 
-    def test_existing_user_invalid_update(self, go_rest_client, valid_user_id):
-        update_info = {'gender': 'invalid gender option'}
+    @pytest.mark.xfail(reason='This seems like a BUG! '
+                       'Attempting to update the post id internally fails, but API returns 200 OK!')
+    def test_existing_post_invalid_update(self, go_rest_client, valid_post_id):
+        update_info = {'id': 9999999}
 
-        # Verify existing user cannot be updated with invalid gender
-        go_rest_client.patch(f'/users/{valid_user_id}', update_info, 422)
+        # Verify existing post cannot be updated with invalid gender
+        go_rest_client.patch(f'/posts/{valid_post_id}', update_info, 422)
