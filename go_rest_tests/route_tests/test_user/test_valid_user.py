@@ -21,35 +21,35 @@ class TestUserCRUD:
         - User data are updated
     """
     def test_get_new_user_by_id(self, go_rest_client, valid_user, valid_user_id):
-        # GET new user by id
+        # Retrieve resource by id
         get_resp = go_rest_client.get(f'/users/{valid_user_id}')
 
-        # Verify GET user response data is same as original
+        # Verify GET response data is same as original
         assert_that(get_resp, readable_json(get_resp))\
             .is_equal_to(valid_user)
 
     def test_new_user_is_vended_in_unfiltered_users(self, go_rest_client, valid_user):
-        # GET all users
+        # Retrieve unfiltered resources
         get_resp = go_rest_client.get('/users/')
 
-        # Verify GET all users response data is same as original
+        # Verify new resource data is vended in GET unfiltered resources response
         assert_that(get_resp, readable_json(get_resp))\
             .contains(valid_user)
 
     def test_new_user_update(self, go_rest_client, valid_user_id):
         update_info = {'status': UserStatus.inactive.value}
 
-        # PUT new user
+        # Update new resource
         patch_resp = go_rest_client.patch(f'/users/{valid_user_id}', update_info)
 
-        # Verify user update & PUT response data
+        # Verify resource was updated successfully
         assert_that(patch_resp, readable_json(patch_resp)) \
             .has_status(UserStatus.inactive.value)
 
     def test_get_new_user_after_update(self, go_rest_client, valid_user_id):
-        # GET new user by id
+        # Retrieve resource by id
         get_resp = go_rest_client.get(f'/users/{valid_user_id}')
 
-        # Verify GET user response data is updated
+        # Verify GET response data is updated
         assert_that(get_resp, readable_json(get_resp))\
             .has_status(UserStatus.inactive.value)
