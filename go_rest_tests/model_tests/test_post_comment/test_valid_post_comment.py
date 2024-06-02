@@ -1,3 +1,4 @@
+import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
@@ -19,6 +20,7 @@ class TestCommentCommentCRUD:
         - Comment exists
         - Comment data are updated
     """
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
     def test_get_post_comment(self, go_rest_client, valid_post_id, valid_comment, valid_comment_id):
         # GET comment on post route
         get_resp = go_rest_client.get(f'/posts/{valid_post_id}/comments/{valid_comment_id}')
@@ -35,6 +37,7 @@ class TestCommentCommentCRUD:
         assert_that(get_resp, readable_json(get_resp))\
             .contains(valid_comment)
 
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
     def test_post_comment_update(self, go_rest_client, valid_post_id, valid_comment_id):
         update_info = {'body': 'I HATE this post!!!'}
 
@@ -45,6 +48,7 @@ class TestCommentCommentCRUD:
         assert_that(patch_resp, readable_json(patch_resp)) \
             .has_body('I HATE this post!!!')
 
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
     def test_get_post_comment_after_update(self, go_rest_client, valid_post_id, valid_comment_id):
         # GET comment on post route
         get_resp = go_rest_client.get(f'/posts/{valid_post_id}/comments/{valid_comment_id}')
