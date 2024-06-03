@@ -65,8 +65,8 @@ class TestCommentInvalidCRUD:
         go_rest_client.delete('/comments/9999999', 404)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the post id internally fails, '
-                              'but API returns 200 OK! We should be getting 403 Forbidden, since a comment\'s  '
-                              'post id cannot be altered!')
+                              'but API returns 200 OK! Getting 403 Forbidden, or 422 is appropriate here, since a '
+                              'comment\'s post id should not be mutable!')
     def test_existing_comment_invalid_update(self, go_rest_client, valid_comment_id):
         update_info = {'post': 9999999}
 

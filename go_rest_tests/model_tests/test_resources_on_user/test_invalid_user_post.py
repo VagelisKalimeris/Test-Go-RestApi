@@ -2,7 +2,6 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.resource_models import Post
 
 
 class TestUserPostInvalidCRUD:
@@ -58,8 +57,8 @@ class TestUserPostInvalidCRUD:
         # Verify non-existing post cannot be deleted on user route
         go_rest_client.delete(f'/users/{valid_user_id}/posts/9999999', 404)
 
-    @pytest.mark.xfail(reason='Attempting to update the id fails with 404. We should be getting 403 Forbidden, '
-                              'since a posts\'s user id cannot be altered!')
+    @pytest.mark.xfail(reason='Attempting to update the id fails with 404. Getting 403 Forbidden, or 422 seems more '
+                              'appropriate here, since a posts\'s user id should not be mutable!')
     def test_existing_post_invalid_update_on_user_route(self, go_rest_client, valid_post_id, valid_user_id):
         update_info = {'id': 9999999}
 

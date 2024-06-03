@@ -35,7 +35,7 @@ class TestTodoInvalidCRUD:
         go_rest_client.post('/todos', invalid_todo.__dict__, status_code=422)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Todos get created with a {"due_on": null} field. '
-                              'This should FAIL with error returned!')
+                              'This should FAIL with 422 returned!')
     def test_missing_due_on_todo_creation(self, go_rest_client, valid_user_id):
         invalid_todo = {'user_id': valid_user_id, 'title': 'This should not be here!',
                         'status': TodoStatus.pending.value}

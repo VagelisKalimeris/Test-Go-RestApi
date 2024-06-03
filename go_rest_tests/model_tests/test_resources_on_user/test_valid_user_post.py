@@ -20,7 +20,7 @@ class TestUserPostCRUD:
         - Post exists
         - Post data are updated
     """
-    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would have expected this to work!')
     def test_get_user_post(self, go_rest_client, valid_user_id, valid_post, valid_post_id):
         # GET post on user route
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts/{valid_post_id}')
@@ -37,7 +37,7 @@ class TestUserPostCRUD:
         assert_that(get_resp, readable_json(get_resp))\
             .contains(valid_post)
 
-    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would have expected this to work!')
     def test_user_post_update(self, go_rest_client, valid_user_id, valid_post_id):
         update_info = {'title': 'Summer vacation cancelled!'}
 
@@ -48,7 +48,7 @@ class TestUserPostCRUD:
         assert_that(patch_resp, readable_json(patch_resp)) \
             .has_title('Summer vacation cancelled!')
 
-    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would expect this to work!')
+    @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would have expected this to work!')
     def test_get_user_post_after_update(self, go_rest_client, valid_user_id, valid_post_id):
         # GET post on user route
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts/{valid_post_id}')

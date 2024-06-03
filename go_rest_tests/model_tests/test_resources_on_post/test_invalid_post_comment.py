@@ -2,7 +2,6 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.resource_models import Comment
 
 
 class TestPostCommentInvalidCRUD:
@@ -65,9 +64,9 @@ class TestPostCommentInvalidCRUD:
         # Verify non-existing comment cannot be deleted on post route
         go_rest_client.delete(f'/posts/{valid_post_id}/comments/9999999', 404)
 
-    @pytest.mark.xfail(reason='Attempting to update post id fails with 404. We should be getting 403 Forbidden, or 422 '
-                              'since a posts\'s user id cannot be altered! Also response is not json decode-able which '
-                              'is inconsistent with general routes behaviour!')
+    @pytest.mark.xfail(reason='Attempting to update post id fails with 404. Getting 403 Forbidden, or 422 seems more '
+                              'appropriate here, since a posts\'s user id should not be mutable! Also response is not '
+                              'json decode-able which is inconsistent with general routes behaviour!')
     def test_existing_comment_invalid_update_on_post_route(self, go_rest_client, valid_post_id, valid_comment_id):
         update_info = {'post': 9999999}
 

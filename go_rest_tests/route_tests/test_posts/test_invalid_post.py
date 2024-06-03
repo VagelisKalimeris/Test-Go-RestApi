@@ -57,8 +57,8 @@ class TestPostInvalidCRUD:
         go_rest_client.delete('/posts/9999999', 404)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the id internally fails, '
-                              'but API returns 200 OK! We should be getting 403 Forbidden, since a posts\'s  '
-                              'user id cannot be altered!')
+                              'but API returns 200 OK! Getting 403 Forbidden, or 422 is appropriate here, since a '
+                              'posts\'s user id should not be mutable!')
     def test_existing_post_invalid_update(self, go_rest_client, valid_post_id):
         update_info = {'id': 9999999}
 

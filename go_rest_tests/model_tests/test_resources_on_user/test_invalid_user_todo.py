@@ -2,7 +2,7 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
-from go_rest_tests.test_data.resource_models import Todo, TodoStatus
+from go_rest_tests.test_data.resource_models import TodoStatus
 
 
 class TestUserTodoInvalidCRUD:
@@ -69,8 +69,8 @@ class TestUserTodoInvalidCRUD:
         # Verify non-existing to do cannot be deleted on user route
         go_rest_client.delete(f'/users/{valid_user_id}/todos/9999999', 404)
 
-    @pytest.mark.xfail(reason='Attempting to update user id fails with 404. We should be getting 403 Forbidden, '
-                              'since a todo\'s user id cannot be altered!')
+    @pytest.mark.xfail(reason='Attempting to update user id fails with 404. Getting 403 Forbidden, or 422 seems more '
+                              'appropriate here, since a todo\'s user id should not be mutable!')
     def test_existing_todo_invalid_update_on_user_route(self, go_rest_client, valid_user_id, valid_todo_id):
         update_info = {'user_id': 9999999}
 
