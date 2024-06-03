@@ -11,7 +11,7 @@ Through GitHub actions(on push).
 API token is already stored as GitHub secret.
 
 ### Locally
-First create a `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`.  
+First create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`.  
 YOUR_TOKEN must be retrieved from [here][token].
 
 #### Docker Container:
