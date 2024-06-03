@@ -27,9 +27,14 @@ Build and run from included Dockerfile
 
 
 ## Limitations
+`PUT` operations are not covered. This is because testing them would have been very similar to `PATCH`.
 
-
-## Bugs Discovered 
+## Bugs Discovered
+All test cases marked with `@pytest.mark.xfail` are one of:
+- Certain bugs
+- Potential bugs
+- Possible improvements
+Please read their `reason` comments for explanations.
 
 
 [token]: https://gorest.co.in/my-account/access-tokens
