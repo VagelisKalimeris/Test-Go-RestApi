@@ -46,11 +46,11 @@ class TestUserInvalidCRUD:
         update_info = {'status': UserStatus.inactive.value}
 
         # Verify non-existing user cannot be updated
-        go_rest_client.patch(f'/users/{9999999}', update_info, 404)
+        go_rest_client.patch(f'/users/9999999', update_info, 404)
 
     def test_non_existing_user_deletion(self, go_rest_client):
         # Verify non-existing user cannot be deleted
-        go_rest_client.delete(f'/users/{9999999}', 404)
+        go_rest_client.delete(f'/users/9999999', 404)
 
     def test_existing_user_invalid_update(self, go_rest_client, valid_user_id):
         update_info = {'gender': 'invalid gender option'}

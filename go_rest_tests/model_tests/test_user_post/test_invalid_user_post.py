@@ -7,7 +7,7 @@ from go_rest_tests.test_data.resource_models import Post
 
 class TestUserPostInvalidCRUD:
     """
-    Verifies post creation FAILS on user route with:
+    Verifies post creation on user route FAILS with:
         - Invalid user
         - Missing body
         - Empty title
@@ -52,11 +52,11 @@ class TestUserPostInvalidCRUD:
         update_info = {'body': 'My friends liked it too'}
 
         # Verify non-existing post cannot be updated on user route
-        go_rest_client.patch(f'/users/{valid_user_id}/posts/{9999999}', update_info, 404)
+        go_rest_client.patch(f'/users/{valid_user_id}/posts/9999999', update_info, 404)
 
     def test_non_existing_post_deletion_on_user_route(self, go_rest_client, valid_user_id):
         # Verify non-existing post cannot be deleted on user route
-        go_rest_client.delete(f'/users/{valid_user_id}/posts/{9999999}', 404)
+        go_rest_client.delete(f'/users/{valid_user_id}/posts/9999999', 404)
 
     @pytest.mark.xfail(reason='Attempting to update the id fails with 404. We should be getting 403 Forbidden, '
                               'since a posts\'s user id cannot be altered!')

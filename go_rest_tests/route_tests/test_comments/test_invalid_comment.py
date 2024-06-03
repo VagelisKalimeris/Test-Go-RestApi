@@ -58,11 +58,11 @@ class TestCommentInvalidCRUD:
         update_info = {'email': 'valid@email.com'}
 
         # Verify non-existing comment cannot be updated
-        go_rest_client.patch(f'/comments/{9999999}', update_info, 404)
+        go_rest_client.patch(f'/comments/9999999', update_info, 404)
 
     def test_non_existing_comment_deletion(self, go_rest_client):
         # Verify non-existing comment cannot be deleted
-        go_rest_client.delete(f'/comments/{9999999}', 404)
+        go_rest_client.delete(f'/comments/9999999', 404)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the post id internally fails, '
                               'but API returns 200 OK! We should be getting 403 Forbidden, since a comment\'s  '
