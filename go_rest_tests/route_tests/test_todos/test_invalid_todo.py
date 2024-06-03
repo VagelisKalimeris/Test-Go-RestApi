@@ -62,11 +62,11 @@ class TestTodoInvalidCRUD:
         update_info = {'status': TodoStatus.completed.value}
 
         # Verify non-existing to do cannot be updated
-        go_rest_client.patch(f'/todos/9999999', update_info, 404)
+        go_rest_client.patch('/todos/9999999', update_info, 404)
 
     def test_non_existing_todo_deletion(self, go_rest_client):
         # Verify non-existing to do cannot be deleted
-        go_rest_client.delete(f'/todos/9999999', 404)
+        go_rest_client.delete('/todos/9999999', 404)
 
     def test_existing_todo_invalid_update(self, go_rest_client, valid_todo_id):
         update_info = {'user_id': 9999999}

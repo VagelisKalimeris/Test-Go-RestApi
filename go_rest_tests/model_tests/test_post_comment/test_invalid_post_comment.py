@@ -30,7 +30,7 @@ class TestPostCommentInvalidCRUD:
         invalid_comment = {'name': 'John Doe', 'email': 'valid@email.com', 'body': 'This post is awesome!'}
 
         # POST comment with invalid post id and verify 422 code on post route
-        go_rest_client.post(f'/posts/9999999/comments', invalid_comment, status_code=422)
+        go_rest_client.post('/posts/9999999/comments', invalid_comment, status_code=422)
 
     def test_missing_name_comment_creation_on_post_route(self, go_rest_client, valid_post_id):
         invalid_comment = {'email': 'valid@email.com', 'body': 'This post is awesome!'}

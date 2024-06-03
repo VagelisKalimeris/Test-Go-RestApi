@@ -50,11 +50,11 @@ class TestPostInvalidCRUD:
         update_info = {'body': 'My friends liked it too'}
 
         # Verify non-existing post cannot be updated
-        go_rest_client.patch(f'/posts/9999999', update_info, 404)
+        go_rest_client.patch('/posts/9999999', update_info, 404)
 
     def test_non_existing_post_deletion(self, go_rest_client):
         # Verify non-existing post cannot be deleted
-        go_rest_client.delete(f'/posts/9999999', 404)
+        go_rest_client.delete('/posts/9999999', 404)
 
     @pytest.mark.xfail(reason='This actually looks like a BUG. Attempting to update the id internally fails, '
                               'but API returns 200 OK! We should be getting 403 Forbidden, since a posts\'s  '
