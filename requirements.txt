@@ -2,3 +2,4 @@ httpx~=0.27.0
 assertpy~=1.1
 pytest~=8.2.1
 python-dotenv~=1.0.1
+flake8>=0
