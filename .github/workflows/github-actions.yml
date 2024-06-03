@@ -18,7 +18,10 @@ jobs:
           pip install -r requirements.txt
       - name: flake8 Lint
         run: flake8 --max-line-length=120
+      - name: Copy secret API bearer token
         env:
           GO_REST_TEST_KEY: ${{ secrets.GO_REST_TEST_KEY }}
+        run:
+          echo GO_REST_TEST_KEY=$GO_REST_TEST_KEY > .env
       - name: Test with pytest
         run: pytest -v
