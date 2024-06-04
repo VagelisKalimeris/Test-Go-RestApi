@@ -6,13 +6,15 @@ https://gorest.co.in/ service.
 ## Execution
 Tests can be run with one of following ways:
 
-### Repository
-Through GitHub actions(on push).  
-API token is already stored as GitHub secret.
+### GitHub page
+- API token is already stored as GitHub secret.
+- Go to actions page
+- Select `Test Go-Rest API` workflow
+- Hit `Run workflow` button
 
 ### Locally
-First create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`.  
-YOUR_TOKEN must be retrieved from [here][token].
+- First create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`. YOUR_TOKEN must be retrieved from [here][token].
+- Then use one of the options below
 
 #### Docker Container:
 Build and run from included Dockerfile
@@ -34,7 +36,8 @@ All test cases marked with `@pytest.mark.xfail` are one of:
 - Certain bugs
 - Potential bugs
 - Possible improvements
-Please read their `reason` comments for explanations.
+
+Please read the `reason` comments for explanations.
 
 
 [token]: https://gorest.co.in/my-account/access-tokens
