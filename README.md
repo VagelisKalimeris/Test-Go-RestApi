@@ -19,6 +19,8 @@ Tests can be run with one of following ways:
 #### Docker Container:
 Build and run from included Dockerfile
 
+OR
+
 #### Local venv
 - Create venv
 - Install dependencies: `pip install -r requirements.txt`
@@ -26,10 +28,17 @@ Build and run from included Dockerfile
 
 
 ## Design
+Having access to the system would have enabled pre-configuring a test environment with data. That would have offered 
+resource creation and test run decoupling.  
+Since this was not an option, a dynamic approach was followed:  
+- A set of test data is created at setup and removed during teardown. During these phases `CREATE`/`DELETE` operations 
+  are tested too.   
+- Tests access these resources and create/delete extra ones, on a need basis. When this happens `CREATE`/`DELETE` 
+  operations are not asserted again, since this is already part of setup/teardown.
 
 
 ## Limitations
-`PUT` operations are not covered. This is because testing them would have been very similar to `PATCH`.
+`PUT` operations are not covered. This is because testing them would have been very similar to `PATCH` which is covered.
 
 ## Bugs Discovered
 All test cases marked with `@pytest.mark.xfail` are one of:
