@@ -3,7 +3,7 @@ from assertpy import assert_that
 
 from framework.response_util import readable_json
 from go_rest_tests.test_data.resource_models import User, UserGender, UserStatus
-from go_rest_tests.test_data.user_emails import valid_user_email, invalid_user_email
+from go_rest_tests.test_data.test_user_emails import valid_user_email, invalid_user_email
 
 
 class TestUserInvalidCRUD:
