@@ -42,9 +42,9 @@ Since this was not an option, a dynamic approach was followed:
 
 ## Bugs Discovered
 All test cases marked with `@pytest.mark.xfail` are one of:
-- Certain bugs
-- Potential bugs
-- Possible improvements
+- Certain bugs. Search for `This actually looks like a BUG`.
+- Potential bugs. Search for `Not sure if its a BUG`.
+- Possible improvements Search for `Problem here is`.
 
 Please read the `reason` comments for explanations.
 
