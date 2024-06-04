@@ -4,7 +4,7 @@ https://gorest.co.in/ service.
 
 
 ## Execution
-Tests can be run with one of following ways:
+Run tests with one of following ways:
 
 ### GitHub page
 - API token is already stored as GitHub secret.
@@ -13,13 +13,14 @@ Tests can be run with one of following ways:
 - Hit `Run workflow` button
 
 ### Locally
-- First create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`. YOUR_TOKEN must be retrieved from [here][token].
+- Retrieve YOUR_TOKEN [here][token].
+- Create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`. 
 - Then use one of the options below
 
 #### Docker Container:
-Build and run from included Dockerfile
+Build and run from included `Dockerfile`
 
-OR
+or
 
 #### Local env
 - Create venv (optional)
@@ -28,8 +29,8 @@ OR
 
 
 ## Design
-Having access to the system would have enabled pre-configuring a test environment with data, in turn providing 
-resource creation and test run decoupling.  
+Having access to the system, would have enabled pre-configuring a test environment with data, in turn decoupling 
+resource creation from test run.  
 Since this was not an option, a dynamic approach was followed:  
 - A set of test data is created at setup and removed during teardown. During these phases `CREATE`/`DELETE` operations 
   are tested too.   
