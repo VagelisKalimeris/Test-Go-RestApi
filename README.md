@@ -22,9 +22,9 @@ Build and run from included Dockerfile
 OR
 
 #### Local venv
-- Create venv
-- Install dependencies: `pip install -r requirements.txt`
-- Run tests: `pytest -v`
+- Create venv (optional)
+- Install dependencies with `pip install -r requirements.txt`
+- Run tests with `pytest -v`
 
 
 ## Design
