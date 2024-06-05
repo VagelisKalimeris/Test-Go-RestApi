@@ -26,7 +26,7 @@ class GoRestTestClient(TestClient):
             'Authorization': f'Bearer {self.token}'
         }
 
-    def get_paginated_result_contains_entry(self, path, dict_val: dict, per_page: int = 100):
+    def get_paginated_result_contains_entry(self, path, dict_val: dict, per_page: int = 100) -> bool:
         page = 1
 
         while True:

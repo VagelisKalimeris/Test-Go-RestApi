@@ -2,6 +2,7 @@ import pytest
 from assertpy import assert_that
 
 from framework.response_util import readable_json
+from go_rest_tests.test_data.random_email_generator import gen_rand_email
 from go_rest_tests.test_data.resource_models import UserGender, UserStatus, User
 
 
@@ -16,7 +17,7 @@ class TestUserResourcesWithSecUser:
     """
     @pytest.fixture(scope='session')
     def valid_user_2_id(self, go_rest_client):
-        valid_user = User('another.user@random.com', UserGender.female.value, 'Jane Doe', UserStatus.active.value)
+        valid_user = User(gen_rand_email(), UserGender.female.value, 'Jane Doe', UserStatus.active.value)
 
         # Create 2nd user
         post_resp = go_rest_client.post('/users', valid_user.__dict__)
