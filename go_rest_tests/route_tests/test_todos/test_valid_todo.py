@@ -29,9 +29,8 @@ class TestTodoCRUD:
             .is_equal_to(valid_todo)
 
     def test_new_todo_is_vended_in_unfiltered_users(self, go_rest_client, valid_todo):
-        # todo: Account for pagination
         # Retrieve unfiltered resources
-        get_resp = go_rest_client.get('/todos/')
+        get_resp = go_rest_client.get_all_paginated_results('/todos/')
 
         # Verify new resource data is vended in GET unfiltered resources response
         assert_that(get_resp, readable_json(get_resp))\

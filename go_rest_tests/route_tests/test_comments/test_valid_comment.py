@@ -28,9 +28,8 @@ class TestCommentCRUD:
             .is_equal_to(valid_comment)
 
     def test_new_comment_is_vended_in_unfiltered_users(self, go_rest_client, valid_comment):
-        # todo: Account for pagination
         # Retrieve unfiltered resources
-        get_resp = go_rest_client.get('/comments/')
+        get_resp = go_rest_client.get_all_paginated_results('/comments/')
 
         # Verify new resource data is vended in GET unfiltered resources response
         assert_that(get_resp, readable_json(get_resp))\
