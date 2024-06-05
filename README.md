@@ -41,9 +41,7 @@ Since this was not an option, a dynamic approach was followed:
 ## Limitations
 - `PUT` operations are not covered. This is because testing them would have been very similar to `PATCH` which is 
   covered.
-- Paginated results are not causing problems, since so far newly added test data come up in 1st page. There exists a PR 
-  retrieving all page results for relevant pages, but api blocks with `429, Too many requests`. Another approach will 
-  be to create methods asserting exists/not-exists in all pages for given data.
+
 
 ## Bugs Discovered
 All test cases marked with `@pytest.mark.xfail` are one of:

@@ -29,13 +29,8 @@ class TestUserCRUD:
             .is_equal_to(valid_user)
 
     def test_new_user_is_vended_in_unfiltered_users(self, go_rest_client, valid_user):
-        # todo: Account for pagination
         # Retrieve unfiltered resources
-        get_resp = go_rest_client.get('/users/')
-
-        # Verify new resource data is vended in GET unfiltered resources response
-        assert_that(get_resp, readable_json(get_resp))\
-            .contains(valid_user)
+        go_rest_client.get_paginated_result_contains_entry('/users/', valid_user)
 
     def test_new_user_update(self, go_rest_client, valid_user_id):
         update_info = {'status': UserStatus.inactive.value}

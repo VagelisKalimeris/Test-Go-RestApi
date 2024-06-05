@@ -1,8 +1,10 @@
 from os import environ
 
+from assertpy import assert_that
 from dotenv import load_dotenv
 
 from framework.http_client import TestClient
+from framework.response_util import readable_json
 from go_rest_tests.config import GO_REST_BASE_URL
 
 
@@ -23,3 +25,17 @@ class GoRestTestClient(TestClient):
         self.auth = {
             'Authorization': f'Bearer {self.token}'
         }
+
+    def get_paginated_result_contains_entry(self, path, dict_val: dict, per_page: int = 100):
+        page = 1
+
+        while True:
+            if not (page_resp := self.get(f'/{path}?page={page}&per_page={per_page}')):
+                return False
+
+            if dict_val in page_resp:
+                return True
+
+            page += 1
+
+
