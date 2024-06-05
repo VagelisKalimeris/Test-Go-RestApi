@@ -29,7 +29,10 @@ class TestCommentCRUD:
 
     def test_new_comment_is_vended_in_unfiltered_users(self, go_rest_client, valid_comment):
         # Retrieve unfiltered resources
-        go_rest_client.get_paginated_result_contains_entry('/comments/', valid_comment)
+        get_res = go_rest_client.get_paginated_result_contains_entry('/comments/', valid_comment)
+
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     def test_comment_update(self, go_rest_client, valid_comment_id):
         update_info = {'body': 'I HATE this post!!!'}

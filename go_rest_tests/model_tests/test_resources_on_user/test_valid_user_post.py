@@ -31,7 +31,10 @@ class TestUserPostCRUD:
 
     def test_user_post_is_vended_in_user_unfiltered_posts(self, go_rest_client, valid_user_id, valid_post):
         # GET all user posts
-        go_rest_client.get_paginated_result_contains_entry(f'/users/{valid_user_id}/posts/', valid_post)
+        get_res = go_rest_client.get_paginated_result_contains_entry(f'/users/{valid_user_id}/posts/', valid_post)
+
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     @pytest.mark.xfail(reason='Not sure if its a BUG or not implemented, but would have expected this to work!')
     def test_user_post_update(self, go_rest_client, valid_user_id, valid_post_id):

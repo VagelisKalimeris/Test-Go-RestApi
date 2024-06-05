@@ -29,7 +29,10 @@ class TestPostCRUD:
 
     def test_new_post_is_vended_in_unfiltered_users(self, go_rest_client, valid_post):
         # Retrieve unfiltered resources
-        go_rest_client.get_paginated_result_contains_entry('/posts/', valid_post)
+        get_res = go_rest_client.get_paginated_result_contains_entry('/posts/', valid_post)
+
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     def test_post_update(self, go_rest_client, valid_post_id):
         update_info = {'title': 'Summer vacation cancelled!'}

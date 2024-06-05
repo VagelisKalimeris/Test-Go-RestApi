@@ -30,7 +30,10 @@ class TestTodoCRUD:
 
     def test_new_todo_is_vended_in_unfiltered_users(self, go_rest_client, valid_todo):
         # Retrieve unfiltered resources
-        go_rest_client.get_paginated_result_contains_entry('/todos/', valid_todo)
+        get_res = go_rest_client.get_paginated_result_contains_entry('/todos/', valid_todo)
+
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     def test_todo_update(self, go_rest_client, valid_todo_id):
         update_info = {'status': TodoStatus.completed.value}
