@@ -43,7 +43,7 @@ Since this was not an option, a dynamic approach was followed:
   covered.
 - Paginated results are not causing problems in 'contains' operations, since newly added test data come up in 1st page. 
   However, for 'does not contain' operations, we need to go through all result pages, and this is blocked by api with 
-  `429, Too many requests`. PRs #2 and #3 were attempts fixing that.
+  `429, Too many requests`. PRs #2 and #3 were attempts at fixing that.
 
 ## Bugs Discovered
 All test cases marked with `@pytest.mark.xfail` are one of:
