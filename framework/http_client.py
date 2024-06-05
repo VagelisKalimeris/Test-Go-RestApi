@@ -14,7 +14,7 @@ class TestClient:
         self.token = None
         self.auth = None
 
-    def get(self, path: str, status_code: int = 200):
+    def get(self, path: str, status_code: int = 200) -> dict:
         # Do call
         get_resp = get(self.service_base_url + path, headers=self.auth)
 
@@ -24,7 +24,7 @@ class TestClient:
         # Extract response body
         return get_resp.json()
 
-    def post(self, path: str, body, status_code: int = 201):
+    def post(self, path: str, body, status_code: int = 201) -> dict:
         # Do call
         post_resp = post(self.service_base_url + path, headers=self.auth, data=body)
 
@@ -34,7 +34,7 @@ class TestClient:
         # Extract response body
         return post_resp.json()
 
-    def put(self, path: str, body, status_code: int = 200):
+    def put(self, path: str, body, status_code: int = 200) -> dict:
         # Do call
         put_resp = put(self.service_base_url + path, headers=self.auth, data=body)
 
@@ -44,7 +44,7 @@ class TestClient:
         # Extract response body
         return put_resp.json()
 
-    def patch(self, path: str, body, status_code: int = 200):
+    def patch(self, path: str, body, status_code: int = 200) -> dict:
         # Do call
         patch_resp = patch(self.service_base_url + path, headers=self.auth, data=body)
 
@@ -54,7 +54,7 @@ class TestClient:
         # Extract response body
         return patch_resp.json()
 
-    def delete(self, path: str, status_code: int = 204):
+    def delete(self, path: str, status_code: int = 204) -> None:
         # Do call
         delete_resp = delete(self.service_base_url + path, headers=self.auth)
 
