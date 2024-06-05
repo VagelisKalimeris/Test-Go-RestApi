@@ -35,4 +35,3 @@ class GoRestTestClient(TestClient):
                 return True
 
             page += 1
-
