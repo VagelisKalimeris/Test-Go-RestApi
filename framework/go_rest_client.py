@@ -38,4 +38,18 @@ class GoRestTestClient(TestClient):
 
             page += 1
 
+    def get_paginated_result_does_not_contain_value(self, path, key: 'str', val: str, per_page: int = 100):
+        page = 1
 
+        while True:
+            if not (page_resp := self.get(f'/{path}?page={page}&per_page={per_page}')):
+                return True
+
+            attributes_list = assert_that(page_resp, readable_json(page_resp)) \
+                .extracting(key)\
+                .val
+
+            if val in attributes_list:
+                return False
+
+            page += 1

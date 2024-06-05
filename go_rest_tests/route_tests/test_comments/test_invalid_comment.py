@@ -46,14 +46,11 @@ class TestCommentInvalidCRUD:
         go_rest_client.post('/comments', invalid_comment.__dict__, status_code=422)
 
     def test_invalid_comment_not_in_unfiltered_comments(self, go_rest_client):
-        # todo: Account for pagination
-        # GET all comments
-        get_resp = go_rest_client.get('/comments/')
-
         # Verify GET all comments response does not contain invalid data
-        assert_that(get_resp, readable_json(get_resp))\
-            .extracting('email')\
-            .does_not_contain('valid@email.com')
+        get_res = go_rest_client.get_paginated_result_does_not_contain_value('/comments/', 'email', 'valid@email.com')
+
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     def test_non_existing_comment_update(self, go_rest_client):
         update_info = {'email': 'valid@email.com'}
