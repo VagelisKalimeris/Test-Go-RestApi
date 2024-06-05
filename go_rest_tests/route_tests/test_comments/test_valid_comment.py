@@ -28,7 +28,7 @@ class TestCommentCRUD:
             .is_equal_to(valid_comment)
 
     def test_new_comment_is_vended_in_unfiltered_users(self, go_rest_client, valid_comment):
-        # Retrieve unfiltered resources
+        # Verify new resource data is vended in GET unfiltered resources response
         get_res = go_rest_client.get_paginated_result_contains_entry('/comments/', valid_comment)
 
         assert_that(get_res, readable_json(get_res))\

@@ -35,13 +35,18 @@ Since this was not an option, a dynamic approach was followed:
 - A set of test data is created at setup and removed during teardown. During these phases `CREATE`/`DELETE` operations 
   are tested too.   
 - Test cases have access to these resources and create/delete extra ones, on a need basis. When this happens 
-  `CREATE`/`DELETE` operations are not asserted again, since this is already done during setup/teardown.
+  `CREATE`/`DELETE` operations are not asserted again,  
+  since this is already done during setup/teardown.
 
 
 ## Limitations
 - `PUT` operations are not covered. This is because testing them would have been very similar to `PATCH` which is 
   covered.
-
+- Paginated results are not causing problems in 'contains' operations, since newly added test data come up in 1st 
+  page(default sorting by latest entry).  
+  However, for 'does not contain' operations, we need to go through all result 
+  pages, and this is blocked by api with `429, Too many requests`.  
+  PRs #2 and #3 were attempts at fixing this.
 
 ## Bugs Discovered
 All test cases marked with `@pytest.mark.xfail` are one of:

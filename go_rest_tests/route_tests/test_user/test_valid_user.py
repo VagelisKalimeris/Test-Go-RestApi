@@ -29,7 +29,7 @@ class TestUserCRUD:
             .is_equal_to(valid_user)
 
     def test_new_user_is_vended_in_unfiltered_users(self, go_rest_client, valid_user):
-        # Retrieve unfiltered resources
+        # Verify new resource data is vended in GET unfiltered resources response
         get_res = go_rest_client.get_paginated_result_contains_entry('/users/', valid_user)
 
         assert_that(get_res, readable_json(get_res))\

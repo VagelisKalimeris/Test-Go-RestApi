@@ -30,7 +30,7 @@ class TestUserPostCRUD:
             .is_equal_to(valid_post)
 
     def test_user_post_is_vended_in_user_unfiltered_posts(self, go_rest_client, valid_user_id, valid_post):
-        # GET all user posts
+        # Verify user posts contain post
         get_res = go_rest_client.get_paginated_result_contains_entry(f'/users/{valid_user_id}/posts/', valid_post)
 
         assert_that(get_res, readable_json(get_res))\

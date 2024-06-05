@@ -28,7 +28,7 @@ class TestPostCRUD:
             .is_equal_to(valid_post)
 
     def test_new_post_is_vended_in_unfiltered_users(self, go_rest_client, valid_post):
-        # Retrieve unfiltered resources
+        # Verify new resource data is vended in GET unfiltered resources response
         get_res = go_rest_client.get_paginated_result_contains_entry('/posts/', valid_post)
 
         assert_that(get_res, readable_json(get_res))\

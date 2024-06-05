@@ -29,7 +29,7 @@ class TestTodoCRUD:
             .is_equal_to(valid_todo)
 
     def test_new_todo_is_vended_in_unfiltered_users(self, go_rest_client, valid_todo):
-        # Retrieve unfiltered resources
+        # Verify new resource data is vended in GET unfiltered resources response
         get_res = go_rest_client.get_paginated_result_contains_entry('/todos/', valid_todo)
 
         assert_that(get_res, readable_json(get_res))\
