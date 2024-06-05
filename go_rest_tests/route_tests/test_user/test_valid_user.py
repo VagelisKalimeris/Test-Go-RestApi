@@ -29,7 +29,6 @@ class TestUserCRUD:
             .is_equal_to(valid_user)
 
     def test_new_user_is_vended_in_unfiltered_users(self, go_rest_client, valid_user):
-        # todo: Account for pagination
         # Retrieve unfiltered resources
         get_resp = go_rest_client.get('/users/')
 
