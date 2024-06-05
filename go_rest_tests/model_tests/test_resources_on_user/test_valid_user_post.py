@@ -30,6 +30,7 @@ class TestUserPostCRUD:
             .is_equal_to(valid_post)
 
     def test_user_post_is_vended_in_user_unfiltered_posts(self, go_rest_client, valid_user_id, valid_post):
+        # todo: Account for pagination
         # GET all user posts
         get_resp = go_rest_client.get(f'/users/{valid_user_id}/posts/')
 

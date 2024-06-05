@@ -50,6 +50,7 @@ class TestTodoInvalidCRUD:
         go_rest_client.post('/todos', invalid_todo.__dict__, status_code=422)
 
     def test_invalid_todo_not_in_unfiltered_todos(self, go_rest_client):
+        # todo: Account for pagination
         # GET all todos
         get_resp = go_rest_client.get('/todos/')
 

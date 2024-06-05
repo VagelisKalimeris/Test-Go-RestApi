@@ -46,6 +46,7 @@ class TestCommentInvalidCRUD:
         go_rest_client.post('/comments', invalid_comment.__dict__, status_code=422)
 
     def test_invalid_comment_not_in_unfiltered_comments(self, go_rest_client):
+        # todo: Account for pagination
         # GET all comments
         get_resp = go_rest_client.get('/comments/')
 
