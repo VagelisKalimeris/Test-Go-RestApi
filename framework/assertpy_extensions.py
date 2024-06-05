@@ -1,7 +1,8 @@
+from assertpy.assertpy import AssertionBuilder
 from assertpy import assert_that, add_extension
 
 
-def extract_key(self, key):
+def extract_key(self, key: str) -> AssertionBuilder:
     """
     Extracts given key from assertion object.
     Reports if key is missing.
