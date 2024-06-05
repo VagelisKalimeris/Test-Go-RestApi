@@ -42,10 +42,10 @@ Since this was not an option, a dynamic approach was followed:
 ## Limitations
 - `PUT` operations are not covered. This is because testing them would have been very similar to `PATCH` which is 
   covered.
-- Paginated results are not causing problems in 'contains' operations, since newly added test data come up in 1st 
+- Testing paginated results is possible in 'contains' operations, since newly added test data come up in 1st 
   page(default sorting by latest entry).  
-  However, for 'does not contain' operations, we need to go through all result 
-  pages, and this is blocked by api with `429, Too many requests`.  
+  However, for 'does not contain' operations, we need to go through all result pages, and this is blocked by api 
+  with `429, Too many requests`.  
   PRs #2 and #3 were attempts at fixing this.
 
 ## Bugs Discovered
