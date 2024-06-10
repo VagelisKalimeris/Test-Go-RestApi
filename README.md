@@ -1,7 +1,6 @@
 ## Objective
-Create e2e test scenarios for the CRUD user operations with API Version 2 and HTTP Bearer Token authentication from 
-https://gorest.co.in/ service.
-
+Implement test automation pipeline for https://gorest.co.in/ service, with API Version 2 and HTTP Bearer Token 
+authentication.
 
 ## Execution
 Run tests with one of following ways:
