@@ -50,14 +50,11 @@ class TestTodoInvalidCRUD:
         go_rest_client.post('/todos', invalid_todo.__dict__, status_code=422)
 
     def test_invalid_todo_not_in_unfiltered_todos(self, go_rest_client):
-        # todo: Account for pagination
-        # GET all todos
-        get_resp = go_rest_client.get('/todos/')
+        # Verify all todos do not contain invalid data
+        get_res = go_rest_client.get_paginated_result_does_not_contain_value('/todos/', 'title', 'Plan vacations')
 
-        # Verify GET all todos response does not contain invalid data
-        assert_that(get_resp, readable_json(get_resp))\
-            .extracting('title')\
-            .does_not_contain('Plan vacations')
+        assert_that(get_res, readable_json(get_res))\
+            .is_true()
 
     def test_non_existing_todo_update(self, go_rest_client):
         update_info = {'status': TodoStatus.completed.value}
