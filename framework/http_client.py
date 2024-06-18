@@ -60,3 +60,20 @@ class TestClient:
 
         # Verify expected status code
         assert_that(delete_resp).has_status_code(status_code)
+
+    def get_all_paginated_results(self, path, per_page=100):
+        # todo: If user base becomes too big, these results might not fit in memory.
+        #       In this case it would be better doing loop inside tests and asserting with each iteration
+        page = 1
+        all_results = []
+
+        while True:
+            page_resp = self.get(f'/{path}?page={page}&per_page={per_page}')
+
+            if not page_resp:
+                break
+
+            all_results.extend(page_resp)
+            page += 1
+
+        return all_results
