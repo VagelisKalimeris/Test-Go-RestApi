@@ -1,20 +1,20 @@
 ## Objective
-Create e2e test scenarios for the CRUD user operations with API Version 2 and HTTP Bearer Token authentication from 
-https://gorest.co.in/ service.
-
+Implement test automation pipeline for https://gorest.co.in/ service, with API Version 2 and HTTP Bearer Token 
+authentication.
 
 ## Execution
-Run tests with one of following ways:
+Run tests by one of following ways:
 
 ### GitHub page
-- API token is already stored as GitHub secret.
-- Go to actions page
+- Go to repository actions page
 - Select `Test Go-Rest API` workflow
 - Hit `Run workflow` button
+- API token is already stored as GitHub secret.
+
 
 ### Locally
-- Retrieve YOUR_TOKEN [here][token].
-- Create an `.env` file and paste `GO_REST_TEST_KEY=YOUR_TOKEN`. 
+- Create a TOKEN [here][token].
+- Create an `.env` file and paste `GO_REST_TEST_KEY=TOKEN`. 
 - Then use one of the options below
 
 #### Docker Container:
@@ -29,9 +29,9 @@ or
 
 
 ## Design
-Having access to the system, would have enabled pre-configuring a test environment with data, in turn decoupling 
+Having access to the system, would have enabled pre-configuring a trusted test environment with data, in turn decoupling 
 resource creation from test run.  
-Since this was not an option, a dynamic approach was followed:  
+This was not an option, so instead a dynamic approach was followed:  
 - A set of test data is created at setup and removed during teardown. During these phases `CREATE`/`DELETE` operations 
   are tested too.   
 - Test cases have access to these resources and create/delete extra ones, on a need basis. When this happens 
@@ -40,12 +40,11 @@ Since this was not an option, a dynamic approach was followed:
 
 
 ## Limitations
-- `PUT` operations are not covered. This is because testing them would have been very similar to `PATCH` which is 
-  covered.
-- Paginated results are not causing problems in 'contains' operations, since newly added test data come up in 1st 
+- `PUT` operations are not covered. This is because these test cases would have been very similar to `PATCH` cases.
+- Testing paginated results works in unfiltered 'contains' operations, since newly added test data come up in 1st 
   page(default sorting by latest entry).  
-  However, for 'does not contain' operations, we need to go through all result 
-  pages, and this is blocked by api with `429, Too many requests`.  
+  However, for 'does not contain' operations, we need to go through all result pages, and this is blocked by api 
+  with `429, Too many requests`.  
   PRs #2 and #3 were attempts at fixing this.
 
 ## Bugs Discovered
@@ -54,7 +53,7 @@ All test cases marked with `@pytest.mark.xfail` are one of:
 - Potential bugs. Search for `Not sure if its a BUG`.
 - Possible improvements Search for `Problem here is`.
 
-Please read the `reason` comments for explanations.
+Please read the `reason` comments for further explanations.
 
 
 [token]: https://gorest.co.in/my-account/access-tokens
