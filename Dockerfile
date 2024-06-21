@@ -13,5 +13,5 @@ RUN pip install --no-cache-dir --upgrade -r /test-go-rest/requirements.txt
 COPY . /test-go-rest/
 
 
-# Run tests first, then start server
+# Run tests
 CMD ["/bin/bash","-c","pytest -v"]
