@@ -34,9 +34,8 @@ class TestUserInvalidCRUD:
         go_rest_client.post('/users', invalid_user.__dict__, status_code=422)
 
     def test_invalid_user_not_in_unfiltered_users(self, go_rest_client):
-        # todo: Account for pagination
         # GET all users
-        get_resp = go_rest_client.get('/users/')
+        get_resp = go_rest_client.get_all_paginated_results('/users/')
 
         # Verify GET all users response does not contain invalid account
         assert_that(get_resp, readable_json(get_resp))\
