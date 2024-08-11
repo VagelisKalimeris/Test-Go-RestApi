@@ -30,13 +30,13 @@ or
 
 ## Design
 Having access to the system, would have enabled pre-configuring a trusted test environment with data, in turn decoupling 
-resource creation from test run.  
-This was not an option, so instead a dynamic approach was followed:  
+resource creation/destruction from test run.  
+This was not an option, so instead a dynamic approach was followed, which is in no way best practice, but should leave 
+the system in a consistent state:  
 - A set of test data is created at setup and removed during teardown. During these phases `CREATE`/`DELETE` operations 
-  are tested too.   
+  are tested too(this is an anti-pattern, but saves code repetition).  
 - Test cases have access to these resources and create/delete extra ones, on a need basis. When this happens 
-  `CREATE`/`DELETE` operations are not asserted again,  
-  since this is already done during setup/teardown.
+  `CREATE`/`DELETE` operations are not asserted again, since this is already done during setup/teardown.
 
 
 ## Limitations
